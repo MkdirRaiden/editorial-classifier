@@ -12,41 +12,48 @@ export class LlmClassificationService {
 
   async classify(domain: string): Promise<ClassificationResult> {
     try {
-      const response = await fetch(LLM_CONFIG.HF_ENDPOINT, {
+      const response = await fetch(LLM_CONFIG.endpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Authorization': `Bearer ${LLM_CONFIG.apiKey}`,
+          'Content-Type': 'application/json',
+          'HTTP-Referer': 'http://localhost:3000',
+          'X-Title': 'Editorial Classifier',
+        },
         body: JSON.stringify({
-          inputs: `CLASSIFY: Is "${domain}" news/editorial? YES/NO only.`,
-          parameters: {
-            max_new_tokens: LLM_CONFIG.maxNewTokens,
-            temperature: LLM_CONFIG.temperature,
-          },
+          model: LLM_CONFIG.model,
+          messages: [{
+            role: 'user',
+            content: `YES or NO only: ${domain} news site?`
+          }],
+          max_tokens: LLM_CONFIG.maxNewTokens,
+          temperature: LLM_CONFIG.temperature,
         }),
       });
 
       if (!response.ok) {
-        throw new Error(`HF API: ${response.status}`);
+        throw new Error(`OpenRouter API: ${response.status}`);
       }
 
-      const data = (await response.json()) as HFResponse[];
-      const llmText = (data[0]?.generated_text || '').toUpperCase();
+      const data = await response.json();
+      const llmText = data.choices?.[0]?.message?.content?.toUpperCase() || '';
       const isEditorial = llmText.includes('YES');
 
       return {
         domain,
         isEditorial,
         confidence: LLM_CONFIG.confidence,
-        method: 'huggingface-llm',
+        method: 'llm',
       };
     } catch (error: unknown) {
       this.logger.warn(
-        `❌ LLM failed (${domain}): ${(error as Error).message}`,
+        `LLM failed (${domain}): ${(error as Error).message}`,
       );
       return {
         domain,
         isEditorial: false,
         confidence: LLM_CONFIG.fallbackConfidence,
-        method: 'huggingface-llm-fallback',
+        method: 'llm-fallback',
       };
     }
   }

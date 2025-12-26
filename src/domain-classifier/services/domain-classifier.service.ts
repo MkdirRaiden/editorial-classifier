@@ -13,6 +13,16 @@ export class DomainClassifierService {
   }
 
   async classifyBatch(domains: string[]): Promise<ClassificationResult[]> {
-    return Promise.all(domains.map((domain) => this.classifyDomain(domain)));
+    const unique = Array.from(new Set(domains));
+    const resultsMap = new Map(
+      (await Promise.all(unique.map(d => this.classifyDomain(d))))
+        .map(result => [result.domain, result])
+    );
+    
+    return domains.map(domain => {
+      const normalized = helpers.normalizeDomain(domain);
+      const result = resultsMap.get(normalized);
+      return result!;
+    });
   }
 }

@@ -2,8 +2,8 @@ export type methodType =
   | 'whitelist'
   | 'blacklist'
   | 'heuristics'
-  | 'huggingface-llm'
-  | 'huggingface-llm-fallback';
+  | 'llm'
+  | 'llm-fallback';
 
 export interface ClassificationResult {
   domain: string;

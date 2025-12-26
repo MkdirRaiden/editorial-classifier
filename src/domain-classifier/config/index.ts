@@ -1,13 +1,16 @@
 import { WhitelistRule } from '@/domain-classifier/interfaces';
 
 export const LLM_CONFIG = {
-  HF_ENDPOINT:
-    'https://api-inference.huggingface.co/models/microsoft/DialoGPT-small',
-  maxNewTokens: 5,
-  temperature: 0.1,
-  confidence: 0.85,
-  fallbackConfidence: 0.6,
+  apiKey: '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',
+  endpoint: 'https://openrouter.ai/api/v1/chat/completions',
+  model: 'meta-llama/llama-3.3-70b-instruct:free',
+  maxNewTokens: 3,
+  temperature: 0,
+  confidence: 0.93,
+  fallbackConfidence: 0.65,
 };
+
+console.log('LLM Config:', LLM_CONFIG);
 
 export const WHITELIST_RULES: WhitelistRule[] = [
   {
@@ -41,6 +44,15 @@ export const WHITELIST_RULES: WhitelistRule[] = [
       'indianexpress.com',
       'politico.com',
       'breitbart.com',
+      'hbr.org',          
+      'techcrunch.com',   
+      'kotaku.com',       
+      'lemonde.fr',       
+      'thehindu.com',     
+      'nydailynews.com',  
+      'martech.org',      
+      'emarketer.com',    
+      'warc.com',         
     ]),
     isEditorial: true,
     method: 'whitelist',

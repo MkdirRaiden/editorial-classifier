@@ -17,3 +17,13 @@ export interface WhitelistRule {
   isEditorial: boolean;
   method: methodType;
 }
+
+interface OpenRouterChoice {
+  message: {
+    content: string;
+  };
+}
+
+export interface OpenRouterResponse {
+  choices?: OpenRouterChoice[];
+}

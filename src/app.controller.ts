@@ -12,7 +12,9 @@ export class AppController {
   }
 
   @Post('classify-batch')
-  async classifyBatch(@Body('domains') domains: string[]): Promise<ClassificationResult[]> {
+  async classifyBatch(
+    @Body('domains') domains: string[],
+  ): Promise<ClassificationResult[]> {
     return this.classifier.classifyBatch(domains);
   }
 

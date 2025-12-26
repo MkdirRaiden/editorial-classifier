@@ -15,7 +15,7 @@ export class ClassificationRulesService {
     const { isEditorial, confidence } =
       helpers.calculateHeuristicScore(normalizedDomain);
 
-    if (confidence < 0.75) { 
+    if (confidence < 0.75) {
       return await this.llmService.classify(normalizedDomain);
     }
 

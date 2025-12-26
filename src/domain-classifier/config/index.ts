@@ -10,7 +10,7 @@ export const LLM_CONFIG = {
   fallbackConfidence: 0.65,
 };
 
-console.log('LLM Config:', LLM_CONFIG);
+// console.log('LLM Config:', LLM_CONFIG);
 
 export const WHITELIST_RULES: WhitelistRule[] = [
   {

@@ -2,10 +2,6 @@ import { Injectable, Logger } from '@nestjs/common';
 import type { ClassificationResult } from '@/domain-classifier/interfaces';
 import { LLM_CONFIG } from '@/domain-classifier/config';
 
-interface HFResponse {
-  generated_text?: string;
-}
-
 @Injectable()
 export class LlmClassificationService {
   private readonly logger = new Logger(LlmClassificationService.name);

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { DomainClassifierService } from '@/domain-classifier/services/domain-classifier.service';
-import { ClassificationRulesService } from './services/classification-rules.service';
-import { LlmClassificationService } from './services/llm.service';
+import { ClassificationRulesService } from '@/domain-classifier/services/classification-rules.service';
+import { LlmClassificationService } from '@/domain-classifier//services/llm.service';
 
 @Module({
   providers: [
